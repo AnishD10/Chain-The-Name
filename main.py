@@ -1,5 +1,7 @@
 
-# Take initial letter name of the input, 
+# There are four players and if they have same initials, the initial which is not presented are presented to them instead of initial let's use emoji's
+from random_unicode_emoji import random_emoji
+
 
 players = {}
 
@@ -31,7 +33,7 @@ def checkPlayerInput():
         
         while i <= numberOfPlayers:
             playerName = input(f"Enter Name of the player{i}: ")
-            players[f"player{i}"] = playerName[0]
+            players[f"player{i}"] = random_emoji()[0]
             i += 1
         return True
     except Exception as e :
@@ -73,6 +75,8 @@ while True:
     else:
         print("Something's Wrong")
         continue
+
+   
     
     
     
