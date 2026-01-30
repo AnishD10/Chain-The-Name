@@ -21,7 +21,6 @@ def checkNumberOfPlayers(numberOfPlayers):
 
 def checkPlayerInput():
     global players
-    global currentPlayer
     players = {}
     try:
         i = 1
@@ -36,7 +35,6 @@ def checkPlayerInput():
             players[f"player{i}"] = playerName
             i += 1
             
-        currentPlayer = players["player1"]
         return True
     except Exception as e :
         print(f"An error occured in player input {e}")
@@ -66,7 +64,7 @@ def checkPlayerConfirmation(statement):
         return False
     
 
-def switchPlayer(currentPlayer):
+def switchPlayer(players, currentPlayer):
 
     print(f"current player is {currentPlayer}")
     if currentPlayer == players["player1"]:
@@ -77,6 +75,8 @@ def switchPlayer(currentPlayer):
         currentPlayer = players["player4"]
     elif currentPlayer == players["player4"]:
          currentPlayer = players["player1"]
+    return currentPlayer
+    
 
 
 
@@ -88,14 +88,13 @@ while True:
         isPlayerReady = checkPlayerConfirmation("Proceed to game? ")
         if isPlayerReady:
             print(players)
+            currentPlayer = players["player1"]
             
             while True:
-                print(f"current player is {currentPlayer}")
                 confirmSwitch = checkPlayerConfirmation("Switch Player ")
                 if confirmSwitch:
-                    switchPlayer(currentPlayer)
-                    print(currentPlayer)
-                    continue
+                    currentPlayer = switchPlayer(players, currentPlayer)
+                    
                 else:
                     currentPlayer = ''
                     print("Thank you!")
