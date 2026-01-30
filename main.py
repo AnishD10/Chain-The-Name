@@ -1,9 +1,6 @@
 
-# There are four players and if they have same initials, the initial which is not presented are presented to them instead of initial let's use emoji's
-from random_unicode_emoji import random_emoji
+# if i have to check a dict which contains multiple keys and and check if the values of those keys matches the users input how do i do that if my values are a list?
 
-
-players = {}
 
 def checkNumberOfPlayers(numberOfPlayers):
     try:
@@ -23,6 +20,9 @@ def checkNumberOfPlayers(numberOfPlayers):
 
 
 def checkPlayerInput():
+    global players
+    global currentPlayer
+    players = {}
     try:
         i = 1
         numberOfPlayers = int(input("Enter number of players(2-4): "))
@@ -33,29 +33,51 @@ def checkPlayerInput():
         
         while i <= numberOfPlayers:
             playerName = input(f"Enter Name of the player{i}: ")
-            players[f"player{i}"] = random_emoji()[0]
+            players[f"player{i}"] = playerName
             i += 1
+            
+        currentPlayer = players["player1"]
         return True
     except Exception as e :
         print(f"An error occured in player input {e}")
         return False
         
 
-def checkPlayerConfirmation():
+def checkPlayerConfirmation(statement):
+    global answers
+    answers = ("yes","no","y","n")
+    
     try:
-        userAnswer = input("Proceed to the game (Y/N): ").lower()
+        while True:
+            userAnswer = input(f"{statement} (Y/N): ").lower()
 
-        print(userAnswer)
+            print(userAnswer)
 
-        if not userAnswer == "y":
-            players.clear()
-            return False
-        else:
-            print("Okay")
-            return True
+            if userAnswer not in answers:
+                print("Type in Yes (Y) or no (N)")
+                continue
+            elif userAnswer == "y" or userAnswer == "yes":
+                return True
+            else:
+                return False
+            
     except Exception as e:
         print(f"An error occured in player Confirmation {e}")
         return False
+    
+
+def switchPlayer(currentPlayer):
+
+    print(f"current player is {currentPlayer}")
+    if currentPlayer == players["player1"]:
+        currentPlayer = players["player2"]
+    elif currentPlayer == players["player2"]:
+        currentPlayer = players["player3"]
+    elif currentPlayer == players["player3"]:
+        currentPlayer = players["player4"]
+    elif currentPlayer == players["player4"]:
+         currentPlayer = players["player1"]
+
 
 
 
@@ -63,14 +85,28 @@ def checkPlayerConfirmation():
 while True:
     isPlayerInputOkay = checkPlayerInput()
     if isPlayerInputOkay:
-        isPlayerReady = checkPlayerConfirmation()
+        isPlayerReady = checkPlayerConfirmation("Proceed to game? ")
         if isPlayerReady:
             print(players)
-            print('Good luck')
+            
+            while True:
+                print(f"current player is {currentPlayer}")
+                confirmSwitch = checkPlayerConfirmation("Switch Player ")
+                if confirmSwitch:
+                    switchPlayer(currentPlayer)
+                    print(currentPlayer)
+                    continue
+                else:
+                    currentPlayer = ''
+                    print("Thank you!")
+                    break
             break
+
+
         else:
-            print("Thank You! See you next time")
-            break
+           players.clear()
+           print("Thank You! See you next time")
+           break
 
     else:
         print("Something's Wrong")
