@@ -67,14 +67,30 @@ def checkPlayerConfirmation(statement):
 def switchPlayer(players, currentPlayer):
 
     print(f"current player is {currentPlayer}")
-    if currentPlayer == players["player1"]:
-        currentPlayer = players["player2"]
-    elif currentPlayer == players["player2"]:
-        currentPlayer = players["player3"]
-    elif currentPlayer == players["player3"]:
-        currentPlayer = players["player4"]
-    elif currentPlayer == players["player4"]:
-         currentPlayer = players["player1"]
+    if len(players) == 2:
+        if currentPlayer == players["player1"]:
+            currentPlayer = players["player2"]
+        else:
+            currentPlayer = players["player1"]
+    elif len(players) == 3:
+        if currentPlayer == players["player1"]:
+            currentPlayer = players["player2"]
+        elif currentPlayer == players["player2"]:
+             currentPlayer = players["player3"]
+        else:
+            currentPlayer = players["player1"]
+
+    elif len(players) == 4:
+        if currentPlayer == players["player1"]:
+            currentPlayer = players["player2"]
+        elif currentPlayer == players["player2"]:
+             currentPlayer = players["player3"]
+        elif currentPlayer == players["player3"]:
+             currentPlayer = players["player4"]
+        
+        else:
+            currentPlayer = players["player1"]
+
     return currentPlayer
     
 
